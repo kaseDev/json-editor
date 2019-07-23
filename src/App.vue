@@ -1,28 +1,70 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <!-- <Value v-model="valueTest" />
+    <h1>{{valueTest}}</h1>
+    <Value v-model="valueTest" /> -->
+    <!-- <Property v-model="fieldTest"/>
+    <h1>{{fieldTest}}</h1>
+    <Property v-model="fieldTest" /> -->
+
+    <!-- <p>{{fieldTest}}</p> -->
+    <Object v-model="objectTest2"/>
+    <p>{{objectTest2}}</p>
+    <Object v-model="objectTest2"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Value from "./components/Value.vue";
+import Property from "./components/Property.vue";
+import Object from "./components/Object.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    Value,
+    Property,
+    Object
+  },
+  data: function() {
+    return {
+      valueTest: "this some text",
+      fieldTest: {
+        key: "this is the key",
+        value: "This is the value"
+      },
+      objectTest: [
+        {
+          key: "name",
+          value: "Jane Doe"
+        },
+        {
+          key: "job",
+          value: "CS student"
+        },
+        {
+          key: "age",
+          value: "20"
+        }
+      ],
+      objectTest2: {
+        name: "Jane Doe",
+        job: "CS Student",
+        age: "20"
+      }
+    }
+  },
+  computed: {
+
+  },
+  methods: {
+
   }
 };
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>
