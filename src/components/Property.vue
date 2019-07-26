@@ -1,18 +1,14 @@
 <template>
 <div class="comp">
-  <Value ref="keyInput" plText="key" v-model="internalState.key" @input="updateValue()" />
-  <span>:</span>
-  <Value ref="valueInput" plText="value" v-model="internalState.value" @input="updateValue()"/>
+  <StringValue ref="keyInput" v-model="internalState.key" @input="updateValue()" />
+  <span> : </span>
+  <Value ref="valueInput" v-model="internalState.value" @input="updateValue()"/>
 </div>
 </template>
 <script>
-import Value from './Value.vue';
 
 export default {
   name: "Property",
-  components: {
-    Value
-  },
   props: {
     value: Object
   },

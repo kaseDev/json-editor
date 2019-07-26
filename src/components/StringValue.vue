@@ -1,11 +1,10 @@
 <template>
-  <div id="comp" :tabindex="focusable" @focus="enterEditMode">
-    <h1>Hello</h1>
+  <span id="comp" :tabindex="focusable" @focus="enterEditMode">
     <span class="quote" @dblclick="enterEditMode" v-show="whiteSpaceMode">"</span>
     <span v-if="!editMode" @dblclick="enterEditMode">{{ internalValue }}</span>
     <input v-else @blur="exitEditMode" @keyup.enter="exitEditMode" v-model="internalValue" type="test" ref='input' @input="fireInput"/>
     <span class="quote" @dblclick="enterEditMode" v-show="whiteSpaceMode">"</span>
-  </div>
+  </span>
 </template>
 
 <script>

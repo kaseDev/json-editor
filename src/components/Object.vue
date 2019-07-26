@@ -1,9 +1,5 @@
 <template>
   <div id="comp">
-    <!-- <Property v-for="i in internalProperties" :key="internalProperties[i].key" v-model="internalProperties[i]" /> -->
-    <!-- <p v-for="i in internalProperties.length">{{ i }}</p> -->
-    <!-- <Property v-model="fieldTest" /> -->
-    <!-- <p>{{fieldTest}}</p> -->
     <Property
         v-for="(internal, index) in internalProperties"
         :value="internal"
@@ -12,17 +8,12 @@
         v-model="internalProperties[index]"
         @input="updateValue()"
     ></Property>
-    {{internalProperties}}
   </div>
 </template>
 
 <script>
-import Property from './Property.vue';
 export default {
   name: "Object",
-  components: {
-    Property
-  },
   data: function() {
     return {
       internalProperties: []
