@@ -1,21 +1,20 @@
 <template>
 <span class="comp">
+
+  <!-- Render proper control based on type of internalValue -->
   <span v-if="isNull && isVacant">null</span>
   <StringValue v-else-if="isString" v-model="internalValue" @input="updateValue"/>
-  <Object v-else-if="isObject" v-model="internalValue" @input="updateValue"/>
+  <Object class="tab" v-else-if="isObject" v-model="internalValue" @input="updateValue"/>
 
-  <select v-if="isFilling" ref="select" @blur="failedToFill" @input="filledType">
+  <!-- Render proper control based on type editing workflow -->
+  <button v-if="isVacant" @click="tryToFill" tabindex="-1" @input="updateValue">+</button>
+  <!-- Appears after + is pressed; initializes default of picked datatype or back to null if nothing chosen -->
+  <select v-else-if="isFilling" ref="select" @blur="failedToFill" @input="filledType">
     <option disabled selected value> -- select an option -- </option>
     <option v-for="option in typeOptions.slice(1)" :key="option" :value="option">{{ option }}</option>
   </select>
-  <button v-else-if="isVacant" @click="tryToFill" tabindex="-1" @input="updateValue">+</button>
   <button v-else-if="isFilled" @click="vacate" tabindex="-1" @input="updateValue">x</button>
 
-  <!-- <span>
-    <span>internalValue: {{internalValue}} </span> ||
-    <span>valueType: {{valueType}} </span> ||
-    <span>interfaceState: {{interfaceState}} </span>
-  </span> -->
 </span>
 </template>
 
@@ -33,7 +32,7 @@ export default {
     return {
       internalValue: null,
       valueType: "null",
-      interfaceState: "vacant",
+      interfaceState: "vacant", // used in type picking control
       typeOptions: [
         "null",
         "string",
@@ -61,7 +60,6 @@ export default {
       this.$nextTick(() => this.$refs.select.focus());
     },
     filledType: function() {
-      console.log(this.interfaceState + " -> " + this.interfaceStateOptions[2]);
       this.interfaceState = this.interfaceStateOptions[2];
       this.valueType = this.$refs.select.options[this.$refs.select.selectedIndex].value;
       this.initializeInternalValue();
@@ -123,5 +121,7 @@ export default {
 </script>
 
 <style scoped>
-
+.tab {
+  margin-left: 40px;
+}
 </style>
