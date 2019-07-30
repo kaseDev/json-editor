@@ -1,9 +1,9 @@
 <template>
-<div class="comp">
+<span class="comp">
   <StringValue ref="keyInput" v-model="internalState.key" @input="updateValue()" />
   <span> : </span>
   <Value ref="valueInput" v-model="internalState.value" @input="updateValue()"/>
-</div>
+</span>
 </template>
 <script>
 

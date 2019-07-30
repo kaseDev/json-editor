@@ -1,13 +1,15 @@
 <template>
   <div id="comp">
-    <Property
-        v-for="(internal, index) in internalProperties"
-        :value="internal"
-        :index="index"
-        :key="index"
-        v-model="internalProperties[index]"
-        @input="updateValue()"
-    ></Property>
+    <span v-for="(internal, index) in internalProperties" :key="index" :index="index">
+      <span id="remove-property-button" @click="removeProperty(index)">x</span>
+      <Property
+          :value="internal"
+          v-model="internalProperties[index]"
+          @input="updateValue"
+      ></Property>
+      <br>
+    </span>
+    <button @click="addProperty">Add Property</button>
   </div>
 </template>
 
@@ -22,6 +24,15 @@ export default {
   methods: {
     updateValue: function() {
       this.$emit('input', this.restructureObject(this.internalProperties));
+    },
+    addProperty: function() {
+      this.internalProperties.push({
+        'key' : 'key',
+        'value': 'value'
+      });
+    },
+    removeProperty: function(index) {
+      this.internalProperties.splice(index, 1);
     },
     destructureObject: function(obj) {
       const properties = [];
@@ -58,5 +69,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#comp {
+  border: black solid 1px;
+}
+
+#remove-property-button {
+  border: black solid 1px;
+  background: lightgray;
+  margin: 3px;
+  padding: 0 3px 0 3px;
+}
 </style>
