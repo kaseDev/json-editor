@@ -1,24 +1,34 @@
 <template>
   <div id="comp">
-    <span v-for="(internal, index) in internalProperties" :key="index" :index="index">
-      <span id="remove-property-button" @click="removeProperty(index)">x</span>
-      <Property
-          :value="internal"
-          v-model="internalProperties[index]"
-          @input="updateValue"
-      ></Property>
-      <br>
-    </span>
+    <draggable v-model="internalProperties" @end="onEnd" handle=".handle">
+      <span v-for="(internal, index) in internalProperties" :key="index" :index="index">
+        <span class="handle">&#9552;</span>
+        <span id="remove-property-button" @click="removeProperty(index)">x</span>
+        <Property
+            :value="internal"
+            v-model="internalProperties[index]"
+            @input="updateValue"
+        ></Property>
+        <br>
+      </span>
+    </draggable>
     <button @click="addProperty">Add Property</button>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
+
 export default {
   name: "Object",
+  components: {
+    draggable
+  },
   data: function() {
     return {
-      internalProperties: []
+      internalProperties: [],
+      oldIndex: "",
+      newIndex: ""
     }
   },
   methods: {
@@ -30,9 +40,16 @@ export default {
         'key' : 'key',
         'value': 'value'
       });
+      this.updateValue();
     },
     removeProperty: function(index) {
       this.internalProperties.splice(index, 1);
+      this.updateValue();
+    },
+    onEnd: function(evnt) {
+      this.oldIndex = evnt.oldIndex;
+      this.newIndex = evnt.newIndex;
+      this.updateValue();
     },
     destructureObject: function(obj) {
       const properties = [];
@@ -59,7 +76,6 @@ export default {
   },
   watch: {
     value: function(newVal) {
-      // console.log(newVal);
       this.internalProperties = this.destructureObject(newVal);
     }
   },

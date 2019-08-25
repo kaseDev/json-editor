@@ -1,5 +1,5 @@
 <template>
-<span class="comp">
+<span class="comp'">
 
   <!-- Render proper control based on type of internalValue -->
   <span v-if="isNull && isVacant">null</span>
