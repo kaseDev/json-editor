@@ -5,7 +5,6 @@
         <span class="handle">&#9552;</span>
         <span id="remove-property-button" @click="removeProperty(index)">x</span>
         <Property
-            :value="internal"
             v-model="internalProperties[index]"
             @input="updateValue"
         ></Property>
