@@ -1,10 +1,11 @@
 <template>
-<span class="comp'">
+<span class="comp">
 
   <!-- Render proper control based on type of internalValue -->
   <span v-if="isNull && isVacant">null</span>
-  <StringValue v-else-if="isString" v-model="internalValue" @input="updateValue"/>
-  <Object class="tab" v-else-if="isObject" v-model="internalValue" @input="updateValue"/>
+  <StringValue v-else-if="isString" v-model="internalValue" @input="updateValue" />
+  <Object class="tab" v-else-if="isObject" v-model="internalValue" @input="updateValue" />
+  <Array class="tab" v-else-if="isArray" v-model="internalValue" @input="updateValue" />
 
   <!-- Render proper control based on type editing workflow -->
   <button v-if="isVacant" @click="tryToFill" tabindex="-1" @input="updateValue">+</button>
@@ -14,7 +15,6 @@
     <option v-for="option in typeOptions.slice(1)" :key="option" :value="option">{{ option }}</option>
   </select>
   <button v-else-if="isFilled" @click="vacate" tabindex="-1" @input="updateValue">x</button>
-
 </span>
 </template>
 
@@ -37,6 +37,7 @@ export default {
         "null",
         "string",
         "object",
+        "array"
       ],
       interfaceStateOptions: [
         "vacant",
@@ -78,7 +79,10 @@ export default {
           this.internalValue = '';
           break;
         case "object":
-          this.internalValue = {innerKey: "Jane Doe"};
+          this.internalValue = {};
+          break;
+        case "array":
+          this.internalValue = [];
           break;
       }
     },
@@ -102,6 +106,9 @@ export default {
     isObject: function() {
       return this.valueType === this.typeOptions[2];
     },
+    isArray: function() {
+      return this.valueType === this.typeOptions[3];
+    },
     isVacant: function() {
       return this.interfaceState === this.interfaceStateOptions[0];
     },
@@ -111,7 +118,6 @@ export default {
     isFilled: function() {
       return this.interfaceState === this.interfaceStateOptions[2];
     }
-
   },
   mounted: function() {
     this.internalValue = this.value;

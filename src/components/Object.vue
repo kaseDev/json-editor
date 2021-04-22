@@ -70,7 +70,6 @@ export default {
     }
   },
   props: {
-    // value: Array,
     value: Object
   },
   watch: {
